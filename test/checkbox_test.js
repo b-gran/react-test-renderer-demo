@@ -84,7 +84,7 @@ describe('<Checkbox>', () => {
     })
   })
 
-  it('responds to clicks', () => {
+  it('correctly responds to change events', () => {
     const checked = false
     const changeHandler = jest.fn()
 
