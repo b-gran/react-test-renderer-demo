@@ -18,26 +18,26 @@ function findInChildren (predicate) {
 }
 
 describe('<Checkbox>', () => {
-  it('renders the supplied text somewhere in the markup', () => {
+  it('renders the supplied text somewhere in the tree', () => {
     const text = 'a checkbox'
-    const markup = TestRenderer.create(
+    const tree = TestRenderer.create(
       <Checkbox text={text} onChange={() => {}} checked={true} />
     )
 
-    // Verify that the checkbox text appears somewhere in the rendered markup.
-    markup.root.find(findInChildren(node =>
+    // Verify that the checkbox text appears somewhere in the rendered tree.
+    tree.root.find(findInChildren(node =>
       typeof node === 'string' &&
       node.toLowerCase() === text
     ))
   });
 
   it('renders exactly one checked <input />', () => {
-    const markup = TestRenderer.create(
+    const tree = TestRenderer.create(
       <Checkbox text="a checkbox" onChange={() => {}} checked={true} />
     )
 
     // testInstance.findByType()
-    //    Finds the first element in the markup with the specified type.
+    //    Finds the first element in the tree with the specified type.
     //    You can pass in strings (corresponding to "primitive" React elements, like input and div)
     //    and you can also pass in custom component classes.
     //
@@ -45,23 +45,23 @@ describe('<Checkbox>', () => {
     //    there are more than instances.
 
     // Find the actual <input /> element
-    const inputElementByType = markup.root.findByType('input')
+    const inputElementByType = tree.root.findByType('input')
     expect(inputElementByType.props.checked).toBe(true)
     expect(inputElementByType.props.type).toBe('checkbox')
 
     // We access the props of the element using testInstance.props
 
     // The <Checkbox /> itself
-    const checkboxClassElement = markup.root.findByType(Checkbox)
+    const checkboxClassElement = tree.root.findByType(Checkbox)
     expect(checkboxClassElement.props.checked).toBe(true)
     expect(checkboxClassElement.props.text).toBe('a checkbox')
 
-    // We can also use testInstance.findByProps() to assert that a single element in the markup
+    // We can also use testInstance.findByProps() to assert that a single element in the tree
     // matches some props.
 
     // testInstance.findByProps() does partial matching of props, so we don't need to supply
     // every prop.
-    const inputElementByProps = markup.root.findByProps({
+    const inputElementByProps = tree.root.findByProps({
       checked: true,
       type: 'checkbox',
     })
@@ -71,13 +71,13 @@ describe('<Checkbox>', () => {
   });
 
   it('renders the <input /> within a <label />', () => {
-    const markup = TestRenderer.create(
+    const tree = TestRenderer.create(
       <Checkbox text="a checkbox" onChange={() => {}} checked={true} />
     )
 
     // The testInstance.find() variants return test instances, so we can do a restricted
     // search of the <label /> to write a test that makes sure the label is clickable.
-    const labelElement = markup.root.findByType('label')
+    const labelElement = tree.root.findByType('label')
     labelElement.findByProps({
       checked: true,
       type: 'checkbox',
@@ -116,20 +116,24 @@ describe('<Checkbox>', () => {
     // Just a stateless functional component
     const SomeSFC = () => <p>hello world</p>
 
-    const markup = TestRenderer.create(
+    const tree = TestRenderer.create(
       <Checkbox text="a checkbox" onChange={() => {}} checked={true} />
     )
 
-    const sfcMarkup =  TestRenderer.create(<SomeSFC />)
+    const sfctree =  TestRenderer.create(<SomeSFC />)
+
+    const domNodeTree = TestRenderer.create(<div>foo</div>)
 
     // .root will be a TestInstance for the SFC and the full-fledged Component
-    console.log(markup.root)
-    console.log(sfcMarkup.root)
+    console.log(tree.root)
+    console.log(sfctree.root)
+    console.log(domNodeTree.root)
 
     // For the Component, getInstance() returns the actual <Checkbox /> node
-    console.log(markup.getInstance())
+    console.log(tree.getInstance())
 
-    // For the SFC, getInstance() returns null
-    console.log(sfcMarkup.getInstance())
+    // For the SFC and DOM node, getInstance() returns null
+    console.log(sfctree.getInstance())
+    console.log(domNodeTree.getInstance())
   })
 });
