@@ -1,0 +1,24 @@
+{
+  "name": "test-react-renderer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "neutrino build",
+    "start": "neutrino start",
+    "test": "neutrino test",
+    "watch": "neutrino test --watch"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-hot-loader": "^4.0.0",
+    "react-test-renderer": "^16.3.0"
+  },
+  "devDependencies": {
+    "@neutrinojs/jest": "^8.2.1",
+    "@neutrinojs/react": "^8.2.1",
+    "neutrino": "^8.2.1"
+  }
+}
