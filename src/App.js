@@ -1,5 +1,4 @@
 import React from 'react';
-import MultipleChoice from './MultipleChoice'
 import Checkbox from './Checkbox'
 
 export default class App extends React.Component {
